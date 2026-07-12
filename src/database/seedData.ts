@@ -1,8 +1,9 @@
 import type { CategoryChecklist, Equipment, ItemChecklist } from '../types/firestore'
 
 export const initialEquipmentSeed: Equipment[] = [
-  { frota: 'FROTA-01', tipoEquipamento: 'Trator', status: 'Ativo' },
-  { frota: 'FROTA-02', tipoEquipamento: 'Colhedora', status: 'Ativo' },
+  { frota: '4001', tipoEquipamento: 'Trator', status: 'Ativo' },
+  { frota: '4002', tipoEquipamento: 'Colhedora', status: 'Ativo' },
+  { frota: '4003', tipoEquipamento: 'Trator', status: 'Ativo' },
 ]
 
 export const initialCategoriesSeed: CategoryChecklist[] = [
