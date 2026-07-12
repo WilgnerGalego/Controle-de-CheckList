@@ -14,3 +14,19 @@ body {
 a {
   text-decoration: none;
 }
+
+.MuiInputBase-root:has(input[type='date']) {
+  min-width: 180px;
+}
+
+.MuiInputBase-input[type='date'] {
+  box-sizing: border-box;
+  min-width: 100%;
+  padding-right: 36px;
+  overflow: visible;
+}
+
+.MuiInputBase-input[type='date']::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  margin-left: 6px;
+}
