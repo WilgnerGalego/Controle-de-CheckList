@@ -16,9 +16,10 @@ const navItems = [
 interface SidebarProps {
   mobileOpen: boolean
   onClose: () => void
+  drawerWidth: number
 }
 
-export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
+export function Sidebar({ mobileOpen, onClose, drawerWidth }: SidebarProps) {
   const location = useLocation()
 
   const drawer = (
@@ -57,13 +58,27 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
         open={mobileOpen}
         onClose={onClose}
         ModalProps={{ keepMounted: true }}
-        sx={{ display: { xs: 'block', md: 'none' }, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 } }}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+            width: drawerWidth,
+            borderRight: '1px solid rgba(0, 0, 0, 0.08)',
+          },
+        }}
       >
         {drawer}
       </Drawer>
       <Drawer
         variant="permanent"
-        sx={{ display: { xs: 'none', md: 'block' }, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 } }}
+        sx={{
+          display: { xs: 'none', md: 'block' },
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+            width: drawerWidth,
+            borderRight: '1px solid rgba(0, 0, 0, 0.08)',
+          },
+        }}
         open
       >
         {drawer}
