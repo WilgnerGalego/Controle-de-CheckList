@@ -21,7 +21,7 @@ import {
 } from '@mui/material'
 import { PageHeader } from '../components/PageHeader'
 import { checklistResponseService, checklistService, equipmentService, itemChecklistService, nonConformityService } from '../services/firestore'
-import { frotaService } from '../services/frotaService'
+import { frenteServicoService } from '../services/frenteServicoService'
 import { auditService } from '../services/auditService'
 import type { ChecklistDoc, ChecklistResponse, ChecklistResponseResult, ChecklistTurno, Equipment, ItemChecklist, NonConformity, NonConformityPriority, NonConformityStatus } from '../types/firestore'
 
@@ -113,18 +113,19 @@ export function NewChecklistPage() {
   const [message, setMessage] = useState<FeedbackState | null>(null)
   const [loadingItems, setLoadingItems] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-  const [frotas, setFrotas] = useState<string[]>([])
+  const [frentesServico, setFrentesServico] = useState<string[]>([])
+  const [novaFrente, setNovaFrente] = useState('')
   const [reportText, setReportText] = useState('')
   const [reportDialogOpen, setReportDialogOpen] = useState(false)
 
   useEffect(() => {
-    const defaultFrotas = frotaService.list()
-    setFrotas(defaultFrotas)
+    const defaultFrentes = frenteServicoService.list()
+    setFrentesServico(defaultFrentes)
 
     void equipmentService.listActive().then((loadedEquipments) => {
-      const fallbackEquipments = defaultFrotas.map((frota, index) => ({
-        id: frota,
-        frota,
+      const fallbackEquipments = defaultFrentes.map((frente, index) => ({
+        id: frente,
+        frota: frente,
         tipoEquipamento: index % 2 === 0 ? 'Trator' : 'Colhedora' as Equipment['tipoEquipamento'],
         status: 'Ativo' as Equipment['status'],
       }))
@@ -263,7 +264,7 @@ export function NewChecklistPage() {
       }))
 
       await Promise.all(defects.map((defect) => nonConformityService.create(defect)))
-      setFrotas(frotaService.add(header.frota))
+      setFrentesServico(frenteServicoService.add(header.frota))
       auditService.add(`Checklist salvo para ${header.frota}.`, 'checklist')
       const generatedReport = buildWhatsAppReport(checklistPayload, selectedEquipment, items, defectItems)
       setReportText(generatedReport)
@@ -300,15 +301,31 @@ export function NewChecklistPage() {
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <FormControl fullWidth required>
-              <InputLabel>Frota</InputLabel>
-              <Select value={header.frota} label="Frota" onChange={(event) => setHeader((current) => ({ ...current, frota: event.target.value }))}>
-                {frotas.map((item) => (
+              <InputLabel>Frente de Serviço</InputLabel>
+              <Select value={header.frota} label="Frente de Serviço" onChange={(event) => setHeader((current) => ({ ...current, frota: event.target.value }))}>
+                {frentesServico.map((item) => (
                   <MenuItem key={item} value={item}>{item}</MenuItem>
                 ))}
               </Select>
             </FormControl>
           </Grid>
         </Grid>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} sx={{ mt: 2 }}>
+          <TextField label="Nova frente de serviço" value={novaFrente} onChange={(event) => setNovaFrente(event.target.value)} size="small" />
+          <Button variant="outlined" onClick={() => {
+            const nextValue = novaFrente.trim().toUpperCase()
+            if (!nextValue) {
+              setMessage({ text: 'Informe um número para a frente de serviço.', severity: 'error' })
+              return
+            }
+            setFrentesServico(frenteServicoService.add(nextValue))
+            setHeader((current) => ({ ...current, frota: nextValue }))
+            setNovaFrente('')
+            setMessage({ text: `Frente de serviço ${nextValue} cadastrada.`, severity: 'success' })
+          }}>
+            Cadastrar frente
+          </Button>
+        </Stack>
       </Paper>
 
       {selectedEquipment && (

@@ -27,6 +27,7 @@ import {
 import { PageHeader } from '../components/PageHeader'
 import { nonConformityService } from '../services/firestore'
 import { auditService } from '../services/auditService'
+import { frenteServicoService } from '../services/frenteServicoService'
 import type { EquipmentType, NonConformity, NonConformityStatus, ChecklistTurno } from '../types/firestore'
 
 const statusOptions: NonConformityStatus[] = ['Pendente', 'O.S. aberta', 'Em manutenção', 'Concluída']
@@ -45,6 +46,8 @@ export function NonConformitiesPage() {
   const [status, setStatus] = useState<NonConformityStatus>('Pendente')
   const [message, setMessage] = useState<FeedbackState | null>(null)
   const [loading, setLoading] = useState(false)
+  const [, setFrentesServico] = useState<string[]>([])
+  const [novaFrente, setNovaFrente] = useState('')
 
   const loadRecords = async () => {
     setLoading(true)
@@ -59,6 +62,7 @@ export function NonConformitiesPage() {
   }
 
   useEffect(() => {
+    setFrentesServico(frenteServicoService.list())
     void loadRecords()
   }, [])
 
@@ -147,7 +151,7 @@ export function NonConformitiesPage() {
             </FormControl>
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 2 }}>
-            <TextField label="Frota" value={filters.frota} onChange={(event) => setFilters((current) => ({ ...current, frota: event.target.value }))} fullWidth />
+            <TextField label="Frente de Serviço" value={filters.frota} onChange={(event) => setFilters((current) => ({ ...current, frota: event.target.value }))} fullWidth />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 2 }}>
             <FormControl fullWidth>
@@ -189,7 +193,7 @@ export function NonConformitiesPage() {
                 <TableCell>Data</TableCell>
                 <TableCell>Hora</TableCell>
                 <TableCell>Turno</TableCell>
-                <TableCell>Frota</TableCell>
+                <TableCell>Frente</TableCell>
                 <TableCell>Tipo</TableCell>
                 <TableCell>Categoria</TableCell>
                 <TableCell>Item</TableCell>
@@ -222,6 +226,25 @@ export function NonConformitiesPage() {
             </TableBody>
           </Table>
         )}
+      </Paper>
+
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Typography variant="subtitle1" sx={{ mb: 1 }}>Cadastrar frente de serviço</Typography>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5}>
+          <TextField label="Nova frente de serviço" value={novaFrente} onChange={(event) => setNovaFrente(event.target.value)} fullWidth />
+          <Button variant="outlined" onClick={() => {
+            const nextValue = novaFrente.trim().toUpperCase()
+            if (!nextValue) {
+              setMessage({ text: 'Informe um número para a frente de serviço.', severity: 'error' })
+              return
+            }
+            setFrentesServico(frenteServicoService.add(nextValue))
+            setNovaFrente('')
+            setMessage({ text: `Frente de serviço ${nextValue} cadastrada.`, severity: 'success' })
+          }}>
+            Cadastrar
+          </Button>
+        </Stack>
       </Paper>
 
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
