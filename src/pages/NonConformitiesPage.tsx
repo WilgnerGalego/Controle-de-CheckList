@@ -133,7 +133,7 @@ export function NonConformitiesPage() {
       <Paper sx={{ p: 3, mb: 3 }}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6, md: 2 }}>
-            <TextField label="Data" type="date" value={filters.data} onChange={(event) => setFilters((current) => ({ ...current, data: event.target.value }))} fullWidth sx={{ '& .MuiInputBase-root': { minWidth: { xs: '100%', sm: 180 } }, '& .MuiInputBase-input': { boxSizing: 'border-box', pr: 4 } }} />
+            <TextField className="date-input-field" label="Data" type="date" value={filters.data} onChange={(event) => setFilters((current) => ({ ...current, data: event.target.value }))} fullWidth slotProps={{ inputLabel: { shrink: true } }} />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 2 }}>
             <FormControl fullWidth>

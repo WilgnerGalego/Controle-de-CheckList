@@ -15,18 +15,34 @@ a {
   text-decoration: none;
 }
 
-.MuiInputBase-root:has(input[type='date']) {
-  min-width: 180px;
+.date-input-field .MuiInputBase-root {
+  width: 100%;
+  min-width: 0;
+  min-height: 56px;
+  box-sizing: border-box;
 }
 
-.MuiInputBase-input[type='date'] {
+.date-input-field .MuiInputBase-input[type='date'] {
   box-sizing: border-box;
-  min-width: 100%;
-  padding-right: 36px;
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 24px;
+  padding: 16.5px 42px 16.5px 14px;
+  font-size: 16px;
+  line-height: 1.4;
   overflow: visible;
 }
 
-.MuiInputBase-input[type='date']::-webkit-calendar-picker-indicator {
+.date-input-field .MuiInputBase-input[type='date']::-webkit-calendar-picker-indicator {
   cursor: pointer;
-  margin-left: 6px;
+  margin: 0;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.date-input-field .MuiInputLabel-root {
+  transform-origin: top left;
 }

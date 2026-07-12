@@ -148,10 +148,10 @@ export function DashboardPage() {
       <Paper sx={{ p: 3, mb: 3 }}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <TextField label="Período inicial" type="date" value={filters.start} onChange={(event) => setFilters((current) => ({ ...current, start: event.target.value }))} fullWidth sx={{ '& .MuiInputBase-root': { minWidth: { xs: '100%', sm: 180 } }, '& .MuiInputBase-input': { boxSizing: 'border-box', pr: 4 } }} />
+            <TextField className="date-input-field" label="Período inicial" type="date" value={filters.start} onChange={(event) => setFilters((current) => ({ ...current, start: event.target.value }))} fullWidth slotProps={{ inputLabel: { shrink: true } }} />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <TextField label="Período final" type="date" value={filters.end} onChange={(event) => setFilters((current) => ({ ...current, end: event.target.value }))} fullWidth sx={{ '& .MuiInputBase-root': { minWidth: { xs: '100%', sm: 180 } }, '& .MuiInputBase-input': { boxSizing: 'border-box', pr: 4 } }} />
+            <TextField className="date-input-field" label="Período final" type="date" value={filters.end} onChange={(event) => setFilters((current) => ({ ...current, end: event.target.value }))} fullWidth slotProps={{ inputLabel: { shrink: true } }} />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 2 }}>
             <FormControl fullWidth>
