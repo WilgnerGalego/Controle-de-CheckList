@@ -189,9 +189,6 @@ export function NewChecklistPage() {
             <TextField className="date-input-field" label="Data" type="date" value={header.data} onChange={(event) => setHeader((current) => ({ ...current, data: event.target.value }))} fullWidth required slotProps={{ inputLabel: { shrink: true } }} />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <TextField label="Hora" type="time" value={header.hora} onChange={(event) => setHeader((current) => ({ ...current, hora: event.target.value }))} fullWidth required />
-          </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <FormControl fullWidth required>
               <InputLabel>Turno</InputLabel>
               <Select value={header.turno} label="Turno" onChange={(event) => setHeader((current) => ({ ...current, turno: event.target.value as ChecklistTurno }))}>
