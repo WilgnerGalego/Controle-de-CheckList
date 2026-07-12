@@ -1,32 +1,74 @@
-# React + TypeScript + Vite
+# Controle de Checklist
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Sistema web para gestão de checklists de equipamentos agrícolas com fluxo de inspeção, não conformidades, histórico e relatórios.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Cadastro de equipamentos
+- Criação de checklists por exceção
+- Registro de itens conforme e não conforme
+- Gestão de não conformidades com O.S. GATEC
+- Dashboard com indicadores e gráficos
+- Relatórios filtrados e exportação em CSV
+- Configurações de categorias, itens e prioridades
+- Histórico consolidado de checklists e defeitos
 
-## React Compiler
+## Requisitos
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 20+
+- npm 10+
 
-## Expanding the Oxlint configuration
+## Instalação local
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+cp .env.example .env
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Configuração do Firebase
+
+Preencha as variáveis no arquivo .env com os dados do seu projeto Firebase:
+
+```env
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+VITE_FIREBASE_MEASUREMENT_ID=
+```
+
+Se as variáveis não forem informadas, o sistema usa um modo de demonstração com valores padrão.
+
+## Build de produção
+
+```bash
+npm run build
+```
+
+## Docker
+
+### Rodar com Docker Compose
+
+```bash
+docker compose up --build
+```
+
+A aplicação ficará disponível em http://localhost:4173
+
+## Estrutura principal
+
+- src/pages: telas do sistema
+- src/services: integração com Firestore e configurações locais
+- src/types: modelos de dados
+- src/components: componentes reutilizáveis
+
+## Fluxo recomendado de uso
+
+1. Cadastrar equipamento
+2. Criar checklist
+3. Marcar itens como conforme ou não conforme
+4. Salvar defeitos e informar O.S. GATEC
+5. Acompanhar no dashboard e nos relatórios

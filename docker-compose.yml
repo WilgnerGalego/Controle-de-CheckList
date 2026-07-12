@@ -1,0 +1,7 @@
+services:
+  checklist-app:
+    build: .
+    ports:
+      - "4173:4173"
+    environment:
+      - VITE_HOST=0.0.0.0
