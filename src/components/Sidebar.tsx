@@ -1,5 +1,5 @@
 import { Drawer, List, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, Divider, Box } from '@mui/material'
-import { Dashboard, Build, FactCheck, History, ReportProblem, Assessment, Settings, Storage } from '@mui/icons-material'
+import { Dashboard, Build, FactCheck, History, ReportProblem, Assessment, Settings, Storage, Groups } from '@mui/icons-material'
 import { Link, useLocation } from 'react-router-dom'
 
 const navItems = [
@@ -9,6 +9,7 @@ const navItems = [
   { label: 'Histórico', path: '/historico', icon: History },
   { label: 'Não Conformidades', path: '/nao-conformidades', icon: ReportProblem },
   { label: 'Relatórios', path: '/relatorios', icon: Assessment },
+  { label: 'Frentes de Serviço', path: '/frentes-servico', icon: Groups },
   { label: 'Configurações', path: '/configuracoes', icon: Settings },
   { label: 'Banco de Dados', path: '/database', icon: Storage },
 ]
